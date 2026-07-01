@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Technical Trades Handbook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="theme-distribution">
+    <!-- ===== Help button (fixed top-right) ===== -->
+    <button
+      id="helpButton"
+      class="help-button"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="helpOverlay"
+      title="Help"
+    >
+      <span class="help-icon" aria-hidden="true">?</span>
+      <span class="sr-only">Open help</span>
+    </button>
+
+    <!-- ===== Help overlay ===== -->
+    <div
+      id="helpOverlay"
+      class="help-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-label="Help"
+    >
+      <button
+        type="button"
+        class="help-overlay__close"
+        aria-label="Close help"
+      >
+        ×
+      </button>
+
+      <div class="help-overlay__panel" role="document">
+        <!-- Distribution help -->
+        <div data-help="distribution">
+          <h2>Distribution Calculator</h2>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 420 140"
+            width="420"
+            height="140"
+            role="img"
+            aria-label="Profiles distributed with maximum distance"
+          >
+            <defs>
+              <marker
+                id="arrow-dist"
+                viewBox="0 0 8 8"
+                refX="8"
+                refY="4"
+                markerWidth="5"
+                markerHeight="8"
+                orient="auto-start-reverse"
+              >
+                <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" />
+              </marker>
+              <style>
+                .sq {
+                  fill: none;
+                  stroke: currentColor;
+                  stroke-width: 2;
+                }
+                .dim {
+                  stroke: currentColor;
+                  stroke-width: 2;
+                }
+                .ext {
+                  stroke: currentColor;
+                  stroke-width: 1.5;
+                  stroke-dasharray: 3 3;
+                }
+                .lbl {
+                  fill: currentColor;
+                  font-family: system-ui, sans-serif;
+                  font-size: 14px;
+                  font-weight: 600;
+                  text-anchor: middle;
+                }
+                .lbl-sm {
+                  fill: currentColor;
+                  font-family: system-ui, sans-serif;
+                  font-size: 12px;
+                  text-anchor: middle;
+                }
+              </style>
+            </defs>
+            <rect class="sq" x="40" y="60" width="28" height="40" rx="2" />
+            <rect class="sq" x="116" y="60" width="28" height="40" rx="2" />
+            <g fill="currentColor">
+              <circle cx="195" cy="80" r="3" />
+              <circle cx="205" cy="80" r="3" />
+              <circle cx="215" cy="80" r="3" />
+            </g>
+            <rect class="sq" x="276" y="60" width="28" height="40" rx="2" />
+            <rect class="sq" x="352" y="60" width="28" height="40" rx="2" />
+            <line class="ext" x1="40" y1="60" x2="40" y2="30" />
+            <line class="ext" x1="380" y1="60" x2="380" y2="30" />
+            <line
+              class="dim"
+              x1="40"
+              y1="30"
+              x2="380"
+              y2="30"
+              marker-start="url(#arrow-dist)"
+              marker-end="url(#arrow-dist)"
+            />
+            <text class="lbl" x="210" y="20">Total width</text>
+            <line class="ext" x1="68" y1="100" x2="68" y2="120" />
+            <line class="ext" x1="116" y1="100" x2="116" y2="120" />
+            <line
+              class="dim"
+              x1="68"
+              y1="120"
+              x2="116"
+              y2="120"
+              marker-start="url(#arrow-dist)"
+              marker-end="url(#arrow-dist)"
+              stroke-width="1.5"
+            />
+            <text class="lbl-sm" x="92" y="135">Max dist</text>
+          </svg>
+          <ul>
+            <li>1: Enter total width (outside of first and last profile)</li>
+            <li>2: Enter maximum distribution distance</li>
+            <li>3: Enter the desired spacing between distributions</li>
+            <li>4: Use calculate button to save the calculation</li>
+          </ul>
+        </div>
+
+        <!-- Miter help -->
+        <div data-help="miter" hidden>
+          <h2>Miter Calculator</h2>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 420 160"
+            width="420"
+            height="160"
+            role="img"
+            aria-label="Two pieces meeting at an angle with miter cuts"
+          >
+            <defs>
+              <style>
+                .piece {
+                  fill: none;
+                  stroke: currentColor;
+                  stroke-width: 2;
+                }
+                .ang {
+                  fill: none;
+                  stroke: currentColor;
+                  stroke-width: 1.5;
+                }
+                .lbl {
+                  fill: currentColor;
+                  font-family: system-ui, sans-serif;
+                  font-size: 14px;
+                  font-weight: 600;
+                  text-anchor: middle;
+                }
+                .lbl-sm {
+                  fill: currentColor;
+                  font-family: system-ui, sans-serif;
+                  font-size: 12px;
+                  text-anchor: middle;
+                }
+              </style>
+            </defs>
+            <polygon
+              class="piece"
+              points="50,110 200,55 200,70 50,125"
+            />
+            <polygon
+              class="piece"
+              points="200,55 370,110 370,130 200,70"
+            />
+            <path class="ang" d="M 184 62 A 18 18 0 0 1 216 62" />
+            <text class="lbl" x="200" y="48">θ</text>
+            <text class="lbl-sm" x="115" y="145">Depth A</text>
+            <text class="lbl-sm" x="285" y="148">Depth B</text>
+          </svg>
+          <ul>
+            <li>1: Enter the miter angle (total angle between pieces)</li>
+            <li>2: Enter depth A (projection of first piece)</li>
+            <li>3: Enter depth B (projection of second piece)</li>
+            <li>4: Use calculate button to save the calculation</li>
+          </ul>
+        </div>
+
+        <!-- Spacing help -->
+        <div data-help="spacing" hidden>
+          <h2>Spacing Calculator</h2>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 420 140"
+            width="420"
+            height="140"
+            role="img"
+            aria-label="Three squares, ellipsis replacing a missing square, and a final square with a dimension line showing the total distance"
+          >
+            <defs>
+              <marker
+                id="arrow-spa"
+                viewBox="0 0 8 8"
+                refX="8"
+                refY="4"
+                markerWidth="5"
+                markerHeight="8"
+                orient="auto-start-reverse"
+              >
+                <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" />
+              </marker>
+              <style>
+                .sq {
+                  fill: none;
+                  stroke: currentColor;
+                  stroke-width: 2;
+                  vector-effect: non-scaling-stroke;
+                }
+                .dots {
+                  fill: currentColor;
+                }
+                .dim-line,
+                .ext {
+                  stroke: currentColor;
+                  stroke-width: 2;
+                  vector-effect: non-scaling-stroke;
+                }
+                .ext {
+                  stroke-width: 1.5;
+                  stroke-dasharray: 3 3;
+                }
+                .label {
+                  fill: currentColor;
+                  font-family: system-ui, sans-serif;
+                  font-size: 16px;
+                  font-weight: 600;
+                  text-anchor: middle;
+                }
+              </style>
+            </defs>
+            <rect class="sq" x="40" y="50" width="40" height="40" rx="2" ry="2" />
+            <rect
+              class="sq"
+              x="108"
+              y="50"
+              width="40"
+              height="40"
+              rx="2"
+              ry="2"
+            />
+            <rect
+              class="sq"
+              x="176"
+              y="50"
+              width="40"
+              height="40"
+              rx="2"
+              ry="2"
+            />
+            <g class="dots">
+              <circle cx="254" cy="53" r="3" />
+              <circle cx="264" cy="53" r="3" />
+              <circle cx="274" cy="53" r="3" />
+            </g>
+            <rect
+              class="sq"
+              x="312"
+              y="50"
+              width="40"
+              height="40"
+              rx="2"
+              ry="2"
+            />
+            <line class="ext" x1="40" y1="50" x2="40" y2="30" />
+            <line class="ext" x1="352" y1="50" x2="352" y2="30" />
+            <line
+              class="dim-line"
+              x1="40"
+              y1="30"
+              x2="352"
+              y2="30"
+              marker-start="url(#arrow-spa)"
+              marker-end="url(#arrow-spa)"
+            />
+            <text class="label" x="196" y="18">Total width</text>
+          </svg>
+          <ul>
+            <li>1: Enter total width (outside of first and last profile)</li>
+            <li>2: Enter width of the profile</li>
+            <li>3: Enter the desired spacing</li>
+            <li>4: Use calculate button to save the calculation</li>
+          </ul>
+        </div>
+
+        <p>Close with <kbd>Esc</kbd> or by clicking outside.</p>
+      </div>
+    </div>
+
+    <!-- ===== Main app ===== -->
+    <main class="app">
+      <header class="app-header">
+        <h1 class="app-title">Technical Trades Handbook</h1>
+        <p class="app-subtitle">Technical Mathematics</p>
+      </header>
+
+      <!-- Tab bar -->
+      <nav class="tabs" role="tablist">
+        <button
+          class="tab"
+          data-tab="spacing"
+          role="tab"
+          aria-selected="false"
+        >
+          Spacing
+        </button>
+        <button
+          class="tab active"
+          data-tab="distribution"
+          role="tab"
+          aria-selected="true"
+        >
+          Subdivision
+        </button>
+        <button
+          class="tab"
+          data-tab="miter"
+          role="tab"
+          aria-selected="false"
+        >
+          Miter
+        </button>
+      </nav>
+
+      <!-- ===== Subdivision panel ===== -->
+      <section id="panel-distribution" class="calc-panel active">
+        <div class="panel-header">
+          <h2 class="panel-title">Division Calculator</h2>
+          <p class="panel-subtitle">Subdivision into pieces with even cut width</p>
+        </div>
+        <div class="card">
+          <form id="form-distribution">
+            <div class="inputs-grid">
+              <div class="field">
+                <label for="dist-totWid">Total width (mm)</label>
+                <input
+                  id="dist-totWid"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 10500"
+                />
+              </div>
+              <div class="field">
+                <label for="dist-maxDis">Maximum Division (mm)</label>
+                <input
+                  id="dist-maxDis"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 3000"
+                />
+              </div>
+              <div class="field">
+                <label for="dist-spa">Spacing (mm)</label>
+                <input
+                  id="dist-spa"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 10"
+                />
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="submit">Calculate</button>
+              <button class="btn ghost" type="button" data-reset="distribution">
+                Reset
+              </button>
+            </div>
+            <div class="results" aria-live="polite">
+              <div class="result">
+                <div class="result-label">Calculated division</div>
+                <div class="result-value" id="dist-calcDis">-</div>
+              </div>
+              <div class="result">
+                <div class="result-label">Number of divisions</div>
+                <div class="result-value" id="dist-nDis">-</div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===== Miter panel ===== -->
+      <section id="panel-miter" class="calc-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Miter Calculator</h2>
+          <p class="panel-subtitle">Miter Cut Calculator</p>
+        </div>
+        <div class="card">
+          <form id="form-miter">
+            <div class="inputs-grid">
+              <div class="field">
+                <label for="miter-angle">Miter Angle (deg)</label>
+                <input
+                  id="miter-angle"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 85"
+                />
+              </div>
+              <div class="field">
+                <label for="miter-depthA">Depth A (mm)</label>
+                <input
+                  id="miter-depthA"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 150"
+                />
+              </div>
+              <div class="field">
+                <label for="miter-depthB">Depth B (mm)</label>
+                <input
+                  id="miter-depthB"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 150"
+                />
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="submit">Calculate</button>
+              <button class="btn ghost" type="button" data-reset="miter">
+                Reset
+              </button>
+            </div>
+            <div class="results" aria-live="polite">
+              <div class="result">
+                <div class="result-label">Calculated Miter A</div>
+                <div class="result-value" id="miter-miterA">-</div>
+              </div>
+              <div class="result">
+                <div class="result-label">Calculated Miter B</div>
+                <div class="result-value" id="miter-miterB">-</div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===== Spacing panel ===== -->
+      <section id="panel-spacing" class="calc-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Spacing Calculator</h2>
+          <p class="panel-subtitle">Profile Spacing Calculator</p>
+        </div>
+        <div class="card">
+          <form id="form-spacing">
+            <div class="inputs-grid">
+              <div class="field">
+                <label for="spa-totWid">Total width (mm)</label>
+                <input
+                  id="spa-totWid"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 2400"
+                />
+              </div>
+              <div class="field">
+                <label for="spa-proWid">Profile width (mm)</label>
+                <input
+                  id="spa-proWid"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 90"
+                />
+              </div>
+              <div class="field">
+                <label for="spa-desSpa">Desired Spacing (mm)</label>
+                <input
+                  id="spa-desSpa"
+                  type="number"
+                  inputmode="decimal"
+                  placeholder="e.g. 30"
+                />
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn primary" type="submit">Calculate</button>
+              <button class="btn ghost" type="button" data-reset="spacing">
+                Reset
+              </button>
+            </div>
+            <div class="results" aria-live="polite">
+              <div class="result">
+                <div class="result-label">Calculated Spacing</div>
+                <div class="result-value" id="spa-calcSpa">-</div>
+              </div>
+              <div class="result">
+                <div class="result-label">Number of profiles</div>
+                <div class="result-value" id="spa-nPro">-</div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <p>
+          <kbd>Enter</kbd> to calculate · <kbd>Esc</kbd> to close help · Swipe
+          up for history
+        </p>
+      </footer>
+    </main>
+
+    <!-- ===== Drawer scrim ===== -->
+    <div class="scrim" id="drawerScrim" aria-hidden="true"></div>
+
+    <!-- ===== Bottom Drawer (History) ===== -->
+    <aside
+      class="drawer"
+      id="historyDrawer"
+      aria-hidden="true"
+      aria-labelledby="drawerTitle"
+      role="dialog"
+    >
+      <header
+        class="drawer-header"
+        id="drawerHandle"
+        role="button"
+        aria-label="Drag or swipe to open/close"
+      >
+        <div class="drawer-grip" aria-hidden="true"></div>
+        <h2 class="drawer-title" id="drawerTitle">History</h2>
+        <div class="drawer-actions">
+          <button
+            class="btn ghost small"
+            type="button"
+            id="clearHistoryBtn"
+          >
+            Clear
+          </button>
+        </div>
+      </header>
+      <div
+        class="drawer-content"
+        role="region"
+        aria-label="Previous calculations"
+      >
+        <ul id="historyList" class="history-list"></ul>
+      </div>
+    </aside>
+
+    <!-- ===== Scripts ===== -->
+    <script src="shared.js"></script>
+    <script src="subdivision.js"></script>
+    <script src="miter.js"></script>
+    <script src="spacing.js"></script>
+  </body>
+</html>
